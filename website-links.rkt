@@ -84,7 +84,7 @@
   (λ~> string->url url->links))
 
 #||
-  This is the main recursive workhorse of the program. It works something like this (numbers in the code):
+  This is the main recursive workhorse of the program. It works something like this (numbers marked in the code):
 
   1. If it is not a good link, return the links already visited (`visited`)
   2. Same thing if the link is alread in `visited`
@@ -121,6 +121,7 @@
     You could add the tests beside each function, but I decided to have a separate section in the file
     instead. To run them you call `raco test FILENAME`.
 ||#
+
 ; ----------------------------------------------------------
 ; TEST
 
