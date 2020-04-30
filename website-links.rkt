@@ -46,7 +46,7 @@
   '("./" ".xml" ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".psd"
     ".eps" ".ai" ".indd" ".raw" ".svg"))
 
-(define invalid-prefixes '("#" "mailto:"))
+(define invalid-prefixes '("#" "mailto:" "javascript:"))
 
 (define (different-domain? baseUrl l)
   (define url (string->url l))
