@@ -1,0 +1,13 @@
+https://resilientwebdesign.com
+https://resilientwebdesign.com/introduction/
+https://resilientwebdesign.com/chapter1/
+https://resilientwebdesign.com/chapter2/
+https://resilientwebdesign.com/chapter3/
+https://resilientwebdesign.com/chapter4/
+https://resilientwebdesign.com/chapter5/
+https://resilientwebdesign.com/chapter6/
+https://resilientwebdesign.com/chapter7/
+https://resilientwebdesign.com/author/
+https://resilientwebdesign.com/index/
+https://resilientwebdesign.com/podcast.rss
+https://resilientwebdesign.com/

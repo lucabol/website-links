@@ -1,0 +1,119 @@
+#lang racket
+
+; Provides functions to extract links from web pages recursively
+
+(provide
+  ; uriString nestingLevels -> list of uriStrings
+  ; Doesn't follow links to non-html resources or pointing to a different domain then uriString.
+  uri->nestedLinks
+  ; uriSTring nestingLevels -> string of newline separated Uri Strings
+  uri->nestedLinksNl)
+
+; ------------------------------------------
+; IMPLEMENTATIION
+
+(require (planet neil/html-parsing:2:0)
+         net/url
+         xml
+         html
+         sxml/sxpath
+         threading)
+
+(define invalid-suffixes '("./" ".xml" ".jpg" ".jpeg" ".png" ".gif" ".tiff" ".psd" ".eps" ".ai" ".indd" ".raw" ".svg"))
+(define invalid-prefixes '("#" "mailto:"))
+(define (different-domain? baseUrl l)
+  (define url (string->url l))
+  (and (url-host url) (not (equal? (url-host baseUrl) (url-host url)))))
+
+(define (good-link? baseUrl l) (not (or (different-domain? baseUrl l)
+                                        (ormap (curry string-suffix? l) invalid-suffixes)
+                                        (ormap (curry string-prefix? l) invalid-prefixes))))
+
+(define (xexp->links xexp) (flatten (map cdr ((sxpath "//a/@href") xexp))))
+
+(define (url->links url)
+  (~>> (call/input-url url get-pure-port html->xexp)
+       xexp->links
+       (filter (curry good-link? url))))
+
+(define uri->links
+  (λ~> string->url url->links))
+
+(define url->baseUrl
+  (λ~> (struct-copy url _ [path '()])))
+
+(define rel->abs combine-url/relative)
+
+(define (uri->nestedLinks-rec baseUrl uri visited levels)
+  (define abs-url (combine-url/relative baseUrl uri))
+  
+  (log-info "~a, ~a, ~a:~a~n" (url->string baseUrl) levels uri (url->string abs-url))
+  (cond [(not (good-link? baseUrl uri)) visited]
+        [(member abs-url visited)  visited]
+        [(zero? levels)  (cons abs-url visited)]
+        [else  (for/fold ([acc (cons abs-url visited)])
+                         ([l (in-list (url->links abs-url))])
+                 (uri->nestedLinks-rec abs-url l acc (sub1 levels)))]))
+
+(define (uri->nestedLinks uri levels) (reverse (uri->nestedLinks-rec (string->url uri) "" '() levels)))
+
+(define (uri->nestedLinksNl uri levels)
+  (define links (uri->nestedLinks uri levels))
+  (string-join (map url->string links) "\n" #:after-last "\n"))
+
+; ----------------------------------------------------------
+; TEST
+
+(module+ test
+  (require rackunit)
+
+  (define test-uris '(
+                  ("https://www.lucabol.com" 3)
+                  ("https://beautifulracket.com/" 3)
+                  ("https://en.wikipedia.org/wiki/Typeface" 1)
+                  ("https://brieferhistoryoftime.com" 3)
+                  ("https://mobydick.wales/" 3)
+                  ("https://resilientwebdesign.com" 3)
+                  ("https://www.c82.net/euclid/" 3)
+                  ))
+
+  ; Call this to refresh the test data
+  (provide create-test-results)
+
+  (define uri->file (λ~> string->url url-host))
+  (define (uri->path test-uri) (build-path "./data" (~> test-uri first uri->file string->path)))
+
+  (for-each (λ (test-uri)
+              (with-input-from-file
+                (uri->path test-uri)
+                (λ () (begin
+                  (define saved-result (port->string))
+                  (define calc-result (uri->nestedLinksNl (first test-uri) (second test-uri)))
+                  (check-equal? calc-result saved-result test-uri)))
+                #:mode 'text
+                ))
+            test-uris)
+
+  (define (create-test-results)
+    (for-each (λ (test-uri)
+                (with-output-to-file
+                  (uri->path test-uri)                  
+                  (λ () (display (uri->nestedLinksNl (first test-uri) (second test-uri))))
+                  #:exists 'replace))
+              test-uris)))
+
+
+(module+ main
+
+  (define levels (make-parameter "3"))
+  (define uri (make-parameter #f))
+
+  (define parser
+    (command-line
+      #:program "website-links"
+      #:usage-help "Extracts links from a webpage recursively to a specified level."
+      #:once-each
+        [("-l" "--levels") LEVELS "How many nested levels to process (default 3)." (levels LEVELS)]
+      #:args (URI) (uri URI)))
+      
+  (display (uri->nestedLinksNl (uri) (string->number (levels)))))
