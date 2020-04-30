@@ -3,7 +3,8 @@
   For now, let's build a web crawler, next, I shall write myself a language.
   That's where Racket really shine.
 
-## The code
+  ## The code
+
   First you declare which language you are using. Racket is a language to build
   languages and the language itself is just one of many (try rereading this phrase).
 ||#
@@ -116,11 +117,11 @@
   (string-join (map url->string links) "\n" #:after-last "\n"))
 
 #||
-  To my great pleasure, Racket allows (encourages?) you to have tests in the same file as the code.
-  They just go into sub modules, that can be constructed piecewise with the `module+` instruction.
+To my great pleasure, Racket allows (encourages?) you to have tests in the same file as the code.
+They just go into sub modules, that can be constructed piecewise with the `module+` instruction.
 
-  You could add the tests beside each function, but I decided to have a separate section in the file
-  instead. To run them you call `raco test FILENAME`.
+You could add the tests beside each function, but I decided to have a separate section in the file
+instead. To run them you call `raco test FILENAME`.
 ||#
 
 ; ----------------------------------------------------------
