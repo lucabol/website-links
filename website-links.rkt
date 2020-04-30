@@ -115,11 +115,12 @@
   (define links (uri->nestedLinks uri levels))
   (string-join (map url->string links) "\n" #:after-last "\n"))
 
-#|| To my great pleasure, Racket allows (encourages?) you to have tests in the same file as the code.
-    They just go into sub modules, that can be constructed piecewise with the `module+` instruction.
+#||
+  To my great pleasure, Racket allows (encourages?) you to have tests in the same file as the code.
+  They just go into sub modules, that can be constructed piecewise with the `module+` instruction.
 
-    You could add the tests beside each function, but I decided to have a separate section in the file
-    instead. To run them you call `raco test FILENAME`.
+  You could add the tests beside each function, but I decided to have a separate section in the file
+  instead. To run them you call `raco test FILENAME`.
 ||#
 
 ; ----------------------------------------------------------
