@@ -1,7 +1,7 @@
 https://brieferhistoryoftime.com
 https://brieferhistoryoftime.com/
 https://brieferhistoryoftime.com/chapters/1
-https://brieferhistoryoftime.com/glossary#light-second-light-year
+https://brieferhistoryoftime.com/glossary
 https://brieferhistoryoftime.com/chapters/2
 https://brieferhistoryoftime.com/chapters/3
 https://brieferhistoryoftime.com/chapters/4

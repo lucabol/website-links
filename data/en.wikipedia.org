@@ -135,7 +135,6 @@ https://en.wikipedia.org/wiki/Liberation_fonts
 https://en.wikipedia.org/wiki/Croscore_fonts
 https://en.wikipedia.org/wiki/Microsoft
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=8
-https://en.wikipedia.org/wiki/Font#Optical_size
 https://en.wikipedia.org/wiki/Newsprint
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=9
 https://en.wikipedia.org/wiki/Hoefler_Text
@@ -174,7 +173,6 @@ https://en.wikipedia.org/wiki/Antiqua_(typeface_class)
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=16
 https://en.wikipedia.org/wiki/Computer_programming
 https://en.wikipedia.org/wiki/Plain_text
-https://en.wikipedia.org/wiki/List_of_typefaces#Monospaced
 https://en.wikipedia.org/wiki/Courier_(typeface)
 https://en.wikipedia.org/wiki/Prestige_Elite
 https://en.wikipedia.org/wiki/Fixedsys
@@ -210,7 +208,6 @@ https://en.wikipedia.org/wiki/Kana
 https://en.wikipedia.org/wiki/Thai_alphabet
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=24
 https://en.wikipedia.org/wiki/Reverse-contrast_typefaces
-https://en.wikipedia.org/wiki/Typeface#Display_type
 https://en.wikipedia.org/wiki/Slab_serif
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=25
 https://en.wikipedia.org/wiki/Graffiti
@@ -251,7 +248,6 @@ https://en.wikipedia.org/wiki/Wikipedia:Citing_sources
 https://en.wikipedia.org/wiki/Wikipedia:Verifiability
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit
 https://en.wikipedia.org/wiki/Help:Introduction_to_referencing_with_Wiki_Markup/1
-https://en.wikipedia.org/wiki/Wikipedia:Verifiability#Burden_of_evidence
 https://en.wikipedia.org/wiki/Help:Maintenance_template_removal
 https://en.wikipedia.org/wiki/Sheet_music
 https://en.wikipedia.org/w/index.php?title=Typeface&amp&action=edit&amp&section=33

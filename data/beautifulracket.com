@@ -54,7 +54,3 @@ https://beautifulracket.com/appendix/resources.html
 https://beautifulracket.com/appendix/thoughts-on-rhombus.html
 https://beautifulracket.com/appendix/why-lop-why-racket.html
 https://beautifulracket.com/appendix/why-racket-why-lisp.html
-https://beautifulracket.com/appendix/glossary.html#garbage-collection
-https://beautifulracket.com/appendix/glossary.html#function
-https://beautifulracket.com/appendix/glossary.html#macro
-https://beautifulracket.com/appendix/glossary.html#hygiene

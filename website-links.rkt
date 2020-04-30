@@ -3,7 +3,7 @@
   For now, let's build a web crawler, next, I shall write myself a language.
   That's where Racket really shine.
 
-  ## The code
+  ## Prelude
 
   First you declare which language you are using. Racket is a language to build
   languages and the language itself is just one of many (try rereading this phrase).
@@ -24,11 +24,11 @@
  ; uriSTring nestingLevels -> string of newline separated Uri Strings
  uri->nestedLinksNl)
 
-; ------------------------------------------
-; IMPLEMENTATIION
 
 #||
-  This is similar, but not idenatical, to C# `using` statement as you declare which packages are needed.
+  ## Implementation
+
+  This is similar, but not identical, to C# `using` statement as you declare which packages are needed.
 ||#
 (require (planet neil/html-parsing:2:0)
          net/url
@@ -87,6 +87,7 @@
 #||
   This is the main recursive workhorse of the program. It works something like this (numbers marked in the code):
 
+  0. Treat links to subparts of a web page as if they were links to the webpage
   1. If it is not a good link, return the links already visited (`visited`)
   2. Same thing if the link is alread in `visited`
   3. If we reached the nesting level specified, add the link to `visited` and return 'visited'
@@ -96,7 +97,10 @@
   It doesn't blow up as easily as in most other languages.
 ||#
 (define (uri->nestedLinks-rec baseUrl uri visited levels)
-  (define abs-url (combine-url/relative baseUrl uri))
+  
+  (define abs-url (if (string-contains? uri "#") ; <0>
+      (~> uri (string-split "#") first (combine-url/relative baseUrl _))
+      (~>> uri (combine-url/relative baseUrl))))
   
   (log-info "~a, ~a, ~a:~a~n" (url->string baseUrl)
                               levels uri (url->string abs-url))
@@ -117,6 +121,7 @@
   (string-join (map url->string links) "\n" #:after-last "\n"))
 
 #||
+## Test
 To my great pleasure, Racket allows (encourages?) you to have tests in the same file as the code.
 They just go into sub modules, that can be constructed piecewise with the `module+` instruction.
 
@@ -124,30 +129,24 @@ You could add the tests beside each function, but I decided to have a separate s
 instead. To run them you call `raco test FILENAME`.
 ||#
 
-; ----------------------------------------------------------
-; TEST
+(define (uri->path test-uri)
+        (build-path "./data" (~> test-uri first uri->file string->path)))
+(define uri->file (λ~> string->url url-host))
+(define test-uris '(
+                    ("https://www.lucabol.com" 3)
+                    ("https://beautifulracket.com/" 3)
+                    ("https://en.wikipedia.org/wiki/Typeface" 1)
+                    ("https://brieferhistoryoftime.com" 3)
+                    ("https://mobydick.wales/" 3)
+                    ("https://resilientwebdesign.com" 3)
+                    ("https://www.c82.net/euclid/" 3)
+                    ))
 
 (module+ test
   (require rackunit)
 
-  (define test-uris '(
-                      ("https://www.lucabol.com" 3)
-                      ("https://beautifulracket.com/" 3)
-                      ("https://en.wikipedia.org/wiki/Typeface" 1)
-                      ("https://brieferhistoryoftime.com" 3)
-                      ("https://mobydick.wales/" 3)
-                      ("https://resilientwebdesign.com" 3)
-                      ("https://www.c82.net/euclid/" 3)
-                      ))
-
-  ; Call this to refresh the test data
-  (provide create-test-results)
-
-  (define uri->file (λ~> string->url url-host))
-  (define (uri->path test-uri)
-          (build-path "./data" (~> test-uri first uri->file string->path)))
-
 #|| I got a bit sloppy not naming my lambdas here ... But, doesn't the lambda symbol look cool? ||#
+
   (for-each (λ (test-uri)
               (with-input-from-file
                   (uri->path test-uri)
@@ -158,17 +157,21 @@ instead. To run them you call `raco test FILENAME`.
                         (check-equal? calc-result saved-result test-uri)))
                 #:mode 'text
                 ))
-            test-uris)
+            test-uris))
 
-  (define (create-test-results)
+#|| This is used to regenerate the test data. You can then inspect it manually before running tests. ||#
+
+(define (refresh-test-data)
     (for-each (λ (test-uri)
                 (with-output-to-file
                     (uri->path test-uri)                  
                   (λ () (display (uri->nestedLinksNl (first test-uri) (second test-uri))))
                   #:exists 'replace))
-              test-uris)))
+              test-uris))
 
 #||
+  ## Main
+
   Main goes into its own submodule as well. Racket is not as pure as Haskell, so you can naturally 
   manage side effects like user input and such. You got to appreciate the concisivness of the command
   line parsing library.
@@ -176,8 +179,6 @@ instead. To run them you call `raco test FILENAME`.
   The code below looks a bit odd to me. It could probably be refactored
   so that the parser expression returns the values instead of filling out  parameters.
 ||#
-;-----------------------------------------------------
-; MAIN
 
 (module+ main
 

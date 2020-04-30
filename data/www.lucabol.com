@@ -13,7 +13,7 @@ https://www.lucabol.com/posts/2013-03-20-funky-c-for-literate-programming/
 https://www.lucabol.com/posts/2013-01-11-functional-programming-in-c-implementation/
 https://www.lucabol.com/posts/2013-01-04-functional-programming-in-c/
 https://www.lucabol.com/posts/2012-12-14-llite-language-friendly-literate-programming/
-https://www.lucabol.com/tags/c&#43%3B%26%2343%3B
+https://www.lucabol.com/tags/c&
 https://www.lucabol.com/tags/csharp
 https://www.lucabol.com/posts/2019-12-06-status-of-csharp-8-functional-features-with-a-comparison-to-haskell/
 https://www.lucabol.com/posts/2019-02-04-singleproject/
