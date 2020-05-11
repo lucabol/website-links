@@ -2,6 +2,17 @@
   For now, let's build a web crawler, next, I shall write myself a language.
   That's where Racket really shine.
 
+  The code is [here](https://github.com/lucabol/website-links). Thanks to [Mike](https://github.com/mjrousos) for reviewing it.
+
+  ## Why
+  I want to translate a website, including recursively reached pages, to a pdf to read on my e-reader.
+  This program does the first step: going from a URL to a list of URLs by recursively navigating the links
+  on the page.
+
+  The `PS1Script` directory contains scripts to perfrom the other steps:
+  1. Translate all the links to PDF pages (using Chrome headless).
+  2. Combine all the PDFs to a single document (using `cpdf`).
+
   ## Prelude
 
   First you declare which language you are using. Racket is a language to build
